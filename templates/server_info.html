@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>主机列表</title>
+    <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/static/js/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 ">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">基本信息</div>
+
+                <ul class="list-group">
+                    <li class="list-group-item"><b>主机名: </b>{{ host_info.host.hostname }}</li>
+                    <li class="list-group-item"><b>操作系统：</b>{{ host_info.host.os }} {{ host_info.osrelease }}</li>
+                    <li class="list-group-item"><b>内核版本： </b>{{ host_info.kernelrelease }}</li>
+                    <li class="list-group-item"><b>CPU：</b>{{ host_info.cpu_info }}</li>
+                    <li class="list-group-item"><b>序列号：</b>{{ host_info.serialnumber }}</li>
+                    <li class="list-group-item"><b>Minion版本：</b>{{ host_info.minion_version }}</li>
+                    <li class="list-group-item"><b>备注：</b>{{ host_info.message }}</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="col-md-8 ">
+            <div class="panel panel-success">
+                <div class="panel-heading">网络信息
+                    <a href="/server/network_info_edit/{{ host_info.pk }}/"></a>
+                </div>
+
+                <table class="table table-bordered" style="text-align: center">
+                    <tr>
+                        <th>网卡名称</th>
+                        <th>IP地址</th>
+                        <th>MAC地址</th>
+                        <th>带宽</th>
+                    </tr>
+                    {% for i in network_info.network_set.all %}
+                        <tr>
+                            <td>{{ i.network_name }}</td>
+                            <td>{{ i.ipaddr }}</td>
+                            <td>{{ i.mac_addr }}</td>
+                            <td>{{ i.bandwidth }}
+                                <a href="/server/network_info_edit/{{ i.id }}/">
+                                    <span class="glyphicon glyphicon-pencil pull-right"></span>
+                                </a>
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">机房信息
+                    <a href="/server/room_info_edit/{{ host_info.room.pk }}/">
+                        <span class="glyphicon glyphicon-pencil pull-right" style="color: white"></span>
+                    </a>
+                </div>
+
+                <table class="table table-bordered" style="text-align: center">
+                    <tr>
+                        <th>机房/地区</th>
+                        <th>负责人</th>
+                        <th>联系方式</th>
+                        <th>机柜位置</th>
+                    </tr>
+                    <tr>
+                       <td> {{ host_info.room.region }} </td>
+                       <td> {{ host_info.room.principal }} </td>
+                       <td> {{ host_info.room.phone }} </td>
+                       <td> {{ host_info.room.cabinet }} </td>
+                    </tr>
+
+{#                    {% for form in formset %}#}
+{#                        <tr>#}
+{#                            {% for field in form %}#}
+{#                                {% if forloop.last %}#}
+                                    {#隐藏id#}
+{#                                    <td class="hide">{{ field }}</td>#}
+{#                                {% else %}#}
+                                    {#显示其他字段#}
+{#                                    <td>{{ field }}{{ field.errors.0 }}</td>#}
+{#                                {% endif %}#}
+{#                            {% endfor %}#}
+{##}
+{#                        </tr>#}
+{#                    {% endfor %}#}
+
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-4 ">
+
+            <div class="panel panel-info">
+                <div class="panel-heading">硬盘信息</div>
+
+                <table class="table table-bordered" style="text-align: center">
+                    <tr>
+                        <th>对应分区</th>
+                        <th>硬盘类型</th>
+                        <th>硬盘大小</th>
+                    </tr>
+                    {% for i in host_info.disk_set.all %}
+                        <tr>
+                            <td>{{ i.partition }}</td>
+                            <td>{{ i.disk_type }}</td>
+                            <td>{{ i.disk_size }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

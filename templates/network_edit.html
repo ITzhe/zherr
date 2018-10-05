@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title> 修改网络信息 </title>
+    <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/static/js/bootstrap/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <h2>网络修改</h2>
+
+        <form action="" method="post">
+            {% csrf_token %}
+                <p>
+                    {{ net_name }}:<input type="number" class="form-control" name="{{ net_name }}">
+                </p>
+                <p>
+                    <button type="submit" class="btn btn-primary">修改</button>
+                </p>
+        </form>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title> 修改机房信息 </title>
+    <script src="/static/js/jquery/jQuery-2.2.0.min.js"></script>
+    <script src="/static/js/bootstrap/js/bootstrap.min.js"></script>
+    <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="container">
+    <h2>添加主机</h2>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <select multiple="" name="host" id="">
+            {% for host in host_list %}
+                <option value="{{ host.hostname }}">{{ host.hostname }} </option>
+            {% endfor %}
+        </select>
+
+{#        <div class="dropdown">#}
+{#            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"#}
+{#                    aria-haspopup="true" aria-expanded="true">#}
+{#                所选目标主机#}
+{#                <span class="caret"></span>#}
+{#            </button>#}
+{#            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">#}
+{#                {% for host in host_list %}#}
+{#                    <li><a href="#">{{ host.hostname }}</a></li>#}
+{#                {% endfor %}#}
+{#            </ul>#}
+{#        </div>#}
+
+        <p>
+            <input type="text" class="form-control" placeholder="您要执行的命令" name="command">
+        </p>
+        <p>
+            <button type="submit" class="btn btn-primary">执行命令</button>
+        </p>
+    </form>
+
+</div>
+
+</body>
+</html>
