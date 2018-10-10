@@ -15,7 +15,7 @@ class Host(models.Model):
     status = models.BooleanField(default=False,verbose_name="是否在线")
 
 class HostInfo(models.Model):
-    cpu_info = models.CharField(max_length=32,verbose_name="CPU信息")
+    cpu_info = models.CharField(max_length=64,verbose_name="CPU信息")
     kernelrelease = models.CharField(max_length=32,verbose_name="内核名称")
     message = models.TextField(max_length=255,null=True,blank=True,verbose_name="备注信息")
     serialnumber = models.CharField(max_length=128,verbose_name="序列号")
@@ -43,3 +43,30 @@ class Room(models.Model):
     phone = models.CharField(max_length=32,null=True,blank=True,verbose_name="联系方式")
     cabinet = models.CharField(max_length=32,null=True,blank=True,verbose_name="机柜位置")
     room_info = models.OneToOneField(to='HostInfo',on_delete=models.CASCADE)
+
+
+########################### User
+
+class User(models.Model):
+    username = models.CharField(max_length=12,unique=True,verbose_name="用户名")
+    passwrod = models.CharField(max_length=24,verbose_name="密码")
+    role = models.ForeignKey(to="Role",verbose_name="对应的职位")
+
+    def __str__(self):
+        return self.username
+
+
+class Role(models.Model):
+    job = models.CharField(max_length=12,unique=True,verbose_name="职位")
+    permission = models.ManyToManyField(to="Permission",blank=True,null=True)
+
+    def __str__(self):
+        return self.job
+
+
+class Permission(models.Model):
+    title =  models.CharField(max_length=12,unique=True,verbose_name="标题")
+    url =  models.CharField(max_length=64,unique=True,verbose_name="含正则的URL")
+
+    def __str__(self):
+        return self.title

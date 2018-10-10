@@ -88,9 +88,10 @@ def server_del(request):
 
 
 def server_list(request):
-    host_list = models.Host.objects.all()
+    # host_list = models.Host.objects.all()
+    host_list = models.Host.objects.get_queryset().order_by('id')
 
-    paginator = Paginator(host_list, 1)
+    paginator = Paginator(host_list, 10)
     # paginator = Paginator(host_list, 20)
     # 每页显示几条数据
 
@@ -129,6 +130,7 @@ def room_edit(request, id):
     if request.method == "GET":
         return render(request,"room_edit.html")
 
+
     region = request.POST.get("region")
     principal = request.POST.get("principal")
     phone = request.POST.get("phone")
@@ -162,8 +164,12 @@ def server_info(request, id):
     host_info = models.HostInfo.objects.filter(pk=id).first()
     network_info = models.Host.objects.filter(pk=id).first()
 
+    from saltstack.utils import has_permission
+    if_has_permission = has_permission.has_permission(request)
+
     return render(request, "server_info.html", {"host_info": host_info,
                                                 "network_info": network_info,
+                                                "if_has_permission":if_has_permission,
                                                 })
 
 def server_status(request):

@@ -16,10 +16,12 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 
+from saltstack.views import login_views
 from saltstack import server_urls,deploy_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^server/', include(server_urls)),
     url(r'^deploy/', include(deploy_urls)),
+    url(r'^login/', login_views.Login),
 ]

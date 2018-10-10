@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>主机列表</title>
+    <title>主机详情</title>
     <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <script src="/static/js/bootstrap/js/bootstrap.min.js"></script>
 </head>
@@ -61,9 +61,13 @@
 
             <div class="panel panel-primary">
                 <div class="panel-heading">机房信息
-                    <a href="/server/room_info_edit/{{ host_info.room.pk }}/">
-                        <span class="glyphicon glyphicon-pencil pull-right" style="color: white"></span>
-                    </a>
+
+                    {% if if_has_permission %}
+                        <a href="/server/room_info_edit/{{ host_info.room.pk }}/">
+                            <span class="glyphicon glyphicon-pencil pull-right" style="color: white"></span>
+                        </a>
+                    {% endif %}
+
                 </div>
 
                 <table class="table table-bordered" style="text-align: center">
@@ -74,26 +78,26 @@
                         <th>机柜位置</th>
                     </tr>
                     <tr>
-                       <td> {{ host_info.room.region }} </td>
-                       <td> {{ host_info.room.principal }} </td>
-                       <td> {{ host_info.room.phone }} </td>
-                       <td> {{ host_info.room.cabinet }} </td>
+                        <td> {{ host_info.room.region }} </td>
+                        <td> {{ host_info.room.principal }} </td>
+                        <td> {{ host_info.room.phone }} </td>
+                        <td> {{ host_info.room.cabinet }} </td>
                     </tr>
 
-{#                    {% for form in formset %}#}
-{#                        <tr>#}
-{#                            {% for field in form %}#}
-{#                                {% if forloop.last %}#}
-                                    {#隐藏id#}
-{#                                    <td class="hide">{{ field }}</td>#}
-{#                                {% else %}#}
-                                    {#显示其他字段#}
-{#                                    <td>{{ field }}{{ field.errors.0 }}</td>#}
-{#                                {% endif %}#}
-{#                            {% endfor %}#}
-{##}
-{#                        </tr>#}
-{#                    {% endfor %}#}
+                    {#                    {% for form in formset %}#}
+                    {#                        <tr>#}
+                    {#                            {% for field in form %}#}
+                    {#                                {% if forloop.last %}#}
+                    {#隐藏id#}
+                    {#                                    <td class="hide">{{ field }}</td>#}
+                    {#                                {% else %}#}
+                    {#显示其他字段#}
+                    {#                                    <td>{{ field }}{{ field.errors.0 }}</td>#}
+                    {#                                {% endif %}#}
+                    {#                            {% endfor %}#}
+                    {##}
+                    {#                        </tr>#}
+                    {#                    {% endfor %}#}
 
 
                 </table>
@@ -130,5 +134,6 @@
 
     </div>
 </div>
+
 </body>
 </html>
